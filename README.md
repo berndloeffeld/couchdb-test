@@ -9,6 +9,10 @@ This software will
 
 
 It is a Maven project, so build it with
-   [s_src]: mvn package
+~~~bash
+mvn package
+~~~
 to get an executable jar file and run it with
-   [s_src]: java -jar target/pollingtest-0.0.1-SNAPSHOT.jar
+~~~bash
+java -jar target/pollingtest-0.0.1-SNAPSHOT.jar
+~~~
