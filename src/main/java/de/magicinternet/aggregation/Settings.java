@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 public final class Settings {
 
     private final String couchUrl;
+    private final String dbName;
 
     /**
      * Default constructor. Feed a resource bundle based on a properties file in here
@@ -22,6 +23,12 @@ public final class Settings {
         } else {
             this.couchUrl = "http://localhost:5984";
         }
+        
+        if(rb.containsKey("couch.db.name")) {
+            this.dbName = rb.getString("couch.db.name");
+        } else {
+            this.dbName = "polling_test_db";
+        }
     }
 
     /**
@@ -29,6 +36,10 @@ public final class Settings {
      */
     public String getCouchUrl() {
         return this.couchUrl;
+    }
+
+    public String getDbName() {
+        return this.dbName;
     }
 
 }

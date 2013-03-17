@@ -47,7 +47,7 @@ public final class PollingApp {
         log.info("Starting the Couch DB polling test");
         final HttpClient httpClient = new StdHttpClient.Builder().url(settings.getCouchUrl()).build();
         final CouchDbInstance dbInstance = new StdCouchDbInstance(httpClient);
-        final CouchDbConnector db = dbInstance.createConnector("my_first_database", true);
+        final CouchDbConnector db = dbInstance.createConnector(settings.getDbName(), true);
         db.createDatabaseIfNotExists();
 
         final FeedListener eater = new FeedListener(db);
