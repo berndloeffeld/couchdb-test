@@ -63,6 +63,8 @@ public final class PollingApp {
     }
 
     private static void createTestEntries(final CouchDbConnector db) throws InterruptedException {
+
+        
         final String[] titles = {"Breaking the habit", "In the end", "Crawling"};
 
         for (String title : titles) {

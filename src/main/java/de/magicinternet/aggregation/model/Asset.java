@@ -2,6 +2,7 @@ package de.magicinternet.aggregation.model;
 
 import org.ektorp.support.CouchDbDocument;
 
+
 /**
  * Asset represenation class.
  * 
@@ -13,7 +14,6 @@ public class Asset extends CouchDbDocument {
     private static final long serialVersionUID = 1;
 
     private String title;
-
     private String description;
 
     /**
