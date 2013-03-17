@@ -56,6 +56,13 @@ public final class PollingApp {
         final Thread t = new Thread(eater);
         t.start();
 
+        if (settings.isCreateTestDataMode()) {
+            createTestEntries(db);
+        }
+
+    }
+
+    private static void createTestEntries(final CouchDbConnector db) throws InterruptedException {
         final String[] titles = {"Breaking the habit", "In the end", "Crawling"};
 
         for (String title : titles) {
@@ -67,8 +74,5 @@ public final class PollingApp {
             final int millisToSleep = 3000;
             Thread.sleep(millisToSleep);
         }
-        
-        eater.stop();
-
     }
 }
