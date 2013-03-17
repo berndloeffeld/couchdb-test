@@ -20,7 +20,7 @@ public class FeedListener implements Runnable {
 
     private static final int CONN_RETRY_TIME = 5000;
 
-    private final Logger log = LoggerFactory .getLogger(Asset.class);
+    private final Logger log = LoggerFactory.getLogger(Asset.class);
 
     private CouchDbConnector db;
     private boolean running = true;
@@ -60,7 +60,8 @@ public class FeedListener implements Runnable {
                 log.info("Waiting for next change");
                 change = feed.next();
                 final String docId = change.getId();
-                log.info("something changed: {}", docId); 
+                log.info("something changed: {}", docId);
+
                 final Asset asset = db.get(Asset.class, docId);
                 log.debug("Titel: {}", asset.getTitle());
                 log.debug("Beschreibung: {}", asset.getDescription());
@@ -70,7 +71,7 @@ public class FeedListener implements Runnable {
                     try {
                         Thread.sleep(CONN_RETRY_TIME);
                     } catch (InterruptedException ie) {
-                       log.error("Thread error while waiting for connection retry", ie);
+                        log.error("Thread error while waiting for connection retry", ie);
                     }
                 } else {
                     log.info("Feed was stopped");

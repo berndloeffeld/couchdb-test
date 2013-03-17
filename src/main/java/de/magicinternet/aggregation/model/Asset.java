@@ -13,7 +13,6 @@ public class Asset extends CouchDbDocument {
     private static final long serialVersionUID = 1;
 
     private String title;
-
     private String description;
 
     /**
@@ -32,7 +31,6 @@ public class Asset extends CouchDbDocument {
         this.title = title;
     }
 
-    
     /**
      * @return the description of the Asset
      */
@@ -43,7 +41,8 @@ public class Asset extends CouchDbDocument {
     /**
      * Set the description of the Asset.
      * 
-     * @param description of the Asset
+     * @param description
+     *            of the Asset
      */
     public void setDescription(final String description) {
         this.description = description;

@@ -28,10 +28,8 @@ public final class PollingApp {
     /**
      * Main method for starting this application.
      * 
-     * @param args
-     *            - should be empty, no argurments expected
-     * @throws Exception
-     *             - everything is thrown, this is a prototype
+     * @param args - should be empty, no argurments expected
+     * @throws Exception - everything is thrown, this is a prototype
      */
     public static void main(final String[] args) throws Exception {
         final Logger log = LoggerFactory.getLogger(PollingApp.class);
@@ -63,6 +61,8 @@ public final class PollingApp {
     }
 
     private static void createTestEntries(final CouchDbConnector db) throws InterruptedException {
+
+        
         final String[] titles = {"Breaking the habit", "In the end", "Crawling"};
 
         for (String title : titles) {
