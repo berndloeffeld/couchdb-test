@@ -2,6 +2,7 @@ package de.magicinternet.aggregation.model;
 
 import org.ektorp.support.CouchDbDocument;
 
+
 /**
  * Asset represenation class.
  * 
