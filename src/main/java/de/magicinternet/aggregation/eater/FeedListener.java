@@ -1,10 +1,11 @@
 package de.magicinternet.aggregation.eater;
 
-import org.apache.log4j.Logger;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.changes.ChangesCommand;
 import org.ektorp.changes.ChangesFeed;
 import org.ektorp.changes.DocumentChange;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.magicinternet.aggregation.model.Asset;
 
@@ -19,7 +20,7 @@ public class FeedListener implements Runnable {
 
     private static final int CONN_RETRY_TIME = 5000;
 
-    private final Logger log = Logger.getLogger(Asset.class);
+    private final Logger log = LoggerFactory .getLogger(Asset.class);
 
     private CouchDbConnector db;
     private boolean running = true;
@@ -59,10 +60,10 @@ public class FeedListener implements Runnable {
                 log.info("Waiting for next change");
                 change = feed.next();
                 final String docId = change.getId();
-                log.info("something changed: " + docId); 
+                log.info("something changed: {}", docId); 
                 final Asset asset = db.get(Asset.class, docId);
-                log.debug("Titel: " + asset.getTitle());
-                log.debug("Beschreibung: " + asset.getDescription());
+                log.debug("Titel: {}", asset.getTitle());
+                log.debug("Beschreibung: {}", asset.getDescription());
             } catch (InterruptedException e) {
                 if (running) {
                     log.error("Error while eating change feed", e);

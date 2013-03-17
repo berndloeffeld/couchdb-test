@@ -3,12 +3,13 @@ package de.magicinternet.aggregation;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import org.apache.log4j.Logger;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.CouchDbInstance;
 import org.ektorp.http.HttpClient;
 import org.ektorp.http.StdHttpClient;
 import org.ektorp.impl.StdCouchDbInstance;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.magicinternet.aggregation.eater.FeedListener;
 import de.magicinternet.aggregation.model.Asset;
@@ -33,7 +34,7 @@ public final class PollingApp {
      *             - everything is thrown, this is a prototype
      */
     public static void main(final String[] args) throws Exception {
-        final Logger log = Logger.getLogger(PollingApp.class);
+        final Logger log = LoggerFactory.getLogger(PollingApp.class);
         Settings settings = null;
 
         try {
