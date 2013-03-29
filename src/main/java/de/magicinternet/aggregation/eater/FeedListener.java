@@ -1,6 +1,5 @@
 package de.magicinternet.aggregation.eater;
 
-import org.ektorp.CouchDbConnector;
 
 /**
  * Listener to a couchdb feed.
@@ -9,11 +8,4 @@ import org.ektorp.CouchDbConnector;
  * 
  */
 public interface FeedListener extends Runnable {
-    /**
-     * Add the CouchDBConnector to the Listener.
-     * 
-     * @param connector
-     *            to the couchDB
-     */
-    void setCouchDbConnector(CouchDbConnector connector);
 }

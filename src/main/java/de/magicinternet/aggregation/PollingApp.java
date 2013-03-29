@@ -1,12 +1,6 @@
 package de.magicinternet.aggregation;
 
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-
 import org.ektorp.CouchDbConnector;
-import org.ektorp.CouchDbInstance;
-import org.ektorp.http.HttpClient;
-import org.ektorp.http.StdHttpClient;
 import org.ektorp.impl.StdCouchDbInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,33 +30,22 @@ public final class PollingApp {
      */
     public static void main(final String[] args) throws Exception {
         final Logger log = LoggerFactory.getLogger(PollingApp.class);
-        Settings settings = null;
-
-        try {
-            final ResourceBundle bundle = ResourceBundle.getBundle("conf");
-            settings = new Settings(bundle);
-        } catch (MissingResourceException e) {
-            log.error("Could not read config", e);
-            System.exit(1);
-        }
-
         log.info("Starting the Couch DB polling test");
-        final HttpClient httpClient = new StdHttpClient.Builder().url(settings.getCouchUrl()).build();
-        final CouchDbInstance dbInstance = new StdCouchDbInstance(httpClient);
-        final CouchDbConnector db = dbInstance.createConnector(settings.getDbName(), true);
-        db.createDatabaseIfNotExists();
-        
+
         @SuppressWarnings("resource")
         final ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring.xml");
         final BeanFactory factory = context;
+        final Settings settings = factory.getBean(Settings.class);
+        final StdCouchDbInstance couchDbInstance = factory.getBean(StdCouchDbInstance.class);
 
         final FeedListener eater = factory.getBean(FeedListener.class);
-        eater.setCouchDbConnector(db);
 
         final Thread t = new Thread(eater);
         t.start();
 
         if (settings.isCreateTestDataMode()) {
+            final CouchDbConnector db = couchDbInstance.createConnector("blub", true);
+            db.createDatabaseIfNotExists();
             createTestEntries(db);
         }
 

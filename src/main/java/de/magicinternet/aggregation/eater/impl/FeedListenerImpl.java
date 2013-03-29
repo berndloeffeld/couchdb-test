@@ -1,11 +1,15 @@
 package de.magicinternet.aggregation.eater.impl;
 
+import javax.annotation.PostConstruct;
+
 import org.ektorp.CouchDbConnector;
 import org.ektorp.changes.ChangesCommand;
 import org.ektorp.changes.ChangesFeed;
 import org.ektorp.changes.DocumentChange;
+import org.ektorp.impl.StdCouchDbInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.magicinternet.aggregation.eater.FeedListener;
@@ -23,13 +27,16 @@ public class FeedListenerImpl implements FeedListener {
 
     private static final int CONN_RETRY_TIME = 5000;
 
-    private final Logger log = LoggerFactory.getLogger(Asset.class);
+    private final Logger log = LoggerFactory.getLogger(FeedListenerImpl.class);
 
     private CouchDbConnector db;
     
     private boolean running = true;
 
     private ChangesFeed feed;
+
+    @Autowired
+    private StdCouchDbInstance couchDbInstance;
 
     /**
      * Stop the long poll.
@@ -75,12 +82,10 @@ public class FeedListenerImpl implements FeedListener {
 
     }
 
-    /**
-     * Add the CouchDBConnector to the Listener.
-     * @param connector to the couchDB
-     */
-    public void setCouchDbConnector(final CouchDbConnector connector) {
-        this.db = connector;
+    @PostConstruct
+    private void postTest() {
+        db = couchDbInstance.createConnector("blub", true);
+        db.createDatabaseIfNotExists();
     }
 
 }
