@@ -10,6 +10,9 @@ import org.ektorp.http.StdHttpClient;
 import org.ektorp.impl.StdCouchDbInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import de.magicinternet.aggregation.eater.FeedListener;
 import de.magicinternet.aggregation.model.Asset;
@@ -48,8 +51,13 @@ public final class PollingApp {
         final CouchDbInstance dbInstance = new StdCouchDbInstance(httpClient);
         final CouchDbConnector db = dbInstance.createConnector(settings.getDbName(), true);
         db.createDatabaseIfNotExists();
+        
+        @SuppressWarnings("resource")
+        final ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring.xml");
+        final BeanFactory factory = context;
 
-        final FeedListener eater = new FeedListener(db);
+        final FeedListener eater = factory.getBean(FeedListener.class);
+        eater.setCouchDbConnector(db);
 
         final Thread t = new Thread(eater);
         t.start();
