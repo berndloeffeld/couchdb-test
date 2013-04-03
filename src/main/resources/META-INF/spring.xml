@@ -22,6 +22,6 @@
     <couchdb:instance id="vasCouchDB" url="http://vasdb2.sim-technik.de:5984" properties="couchdbProperties" /> 
     <!--  <couchdb:instance id="localCouchDB" url="http://bernd:bernd@localhost:5984" properties="couchdbProperties" />  -->
 
-    <couchdb:database name="vasdb" instance-ref="localCouchDB" />
+    <couchdb:database name="vasdb" instance-ref="vasCouchDB" />
 
 </beans> 
