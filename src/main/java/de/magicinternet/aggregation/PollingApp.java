@@ -44,7 +44,7 @@ public final class PollingApp {
         t.start();
 
         if (settings.isCreateTestDataMode()) {
-            final CouchDbConnector db = couchDbInstance.createConnector("blub", true);
+            final CouchDbConnector db = couchDbInstance.createConnector("vasdb-test", true);
             db.createDatabaseIfNotExists();
             createTestEntries(db);
         }
