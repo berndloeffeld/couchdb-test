@@ -19,8 +19,6 @@ public final class Settings {
 
     private ResourceBundle rb;
     
-    private  String couchUrl;
-    private String dbName;
     private  boolean createTestDataMode;
 
     
@@ -31,34 +29,10 @@ public final class Settings {
         return createTestDataMode;
     }
 
-//    /**
-//     * @return The URL of the CouchDB the application will connect to
-//     */
-//    public String getCouchUrl() {
-//        return this.couchUrl;
-//    }
-
-    /**
-     * @return the name of the database that shall be used
-     */
-    public String getDbName() {
-        return this.dbName;
-    }
 
     @PostConstruct
     private void loadConfig() {
         rb = ResourceBundle.getBundle("conf");
-        if (rb.containsKey("couch.url")) {
-            this.couchUrl = rb.getString("couch.url");
-        } else {
-            this.couchUrl = "http://localhost:5984";
-        }
-
-        if (rb.containsKey("couch.db.name")) {
-            this.dbName = rb.getString("couch.db.name");
-        } else {
-            this.dbName = "polling_test_db";
-        }
 
         if (rb.containsKey("app.testdata.mode")) {
             this.createTestDataMode = "true".equals(rb.getString("app.testdata.mode").toLowerCase());

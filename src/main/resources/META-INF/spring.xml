@@ -1,8 +1,6 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:util="http://www.springframework.org/schema/util"
-	xmlns:couchdb="http://www.ektorp.org/schema/couchdb"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:couchdb="http://www.ektorp.org/schema/couchdb"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
@@ -17,11 +15,14 @@
 
 	<context:component-scan base-package="de.magicinternet.aggregation" />
 
-<util:properties id="couchdbProperties" location="classpath:/couchdb.properties"/>
+	<util:properties id="couchdbProperties" location="classpath:/couchdb.properties" />
 
-    <couchdb:instance id="vasCouchDB" url="http://vasdb2.sim-technik.de:5984" properties="couchdbProperties" /> 
-    <!--  <couchdb:instance id="localCouchDB" url="http://bernd:bernd@localhost:5984" properties="couchdbProperties" />  -->
+	<couchdb:instance id="vasCouchDB"
+		url="http://vasdb2.sim-technik.de:5984" properties="couchdbProperties" />
+		
+	<!-- <couchdb:instance id="localCouchDB" url="http://bernd:bernd@localhost:5984" 
+		properties="couchdbProperties" /> -->
 
-    <couchdb:database name="vasdb" instance-ref="vasCouchDB" />
+	<couchdb:database name="vasdb" instance-ref="vasCouchDB" />
 
 </beans> 
