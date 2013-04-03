@@ -1,9 +1,5 @@
 package de.magicinternet.aggregation.eater.impl;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import javax.annotation.PostConstruct;
 
 import org.ektorp.CouchDbConnector;
@@ -62,7 +58,7 @@ public class FeedListenerImpl implements FeedListener {
                 log.info("Waiting for next change");
                 change = feed.next();
                 final String docId = change.getId();
-                printDocumentInfo(docId); 
+                printDocumentInfo(docId);
             } catch (InterruptedException e) {
                 if (running) {
                     log.error("Error while eating change feed", e);
@@ -81,23 +77,10 @@ public class FeedListenerImpl implements FeedListener {
 
     private void printDocumentInfo(final String docId) {
         log.info("something changed: {}", docId);
-
-        final BufferedReader documentReader = new BufferedReader(new InputStreamReader(db.getAsStream(docId)));
-        final StringBuilder documentString = new StringBuilder();
-
-        String line;
-        try {
-            while ((line = documentReader.readLine()) != null) {
-                documentString.append(line);
-            }
-        } catch (IOException e) {
-            log.error("Could not read changed document {}", docId, e);
+        if (log.isDebugEnabled()) {
+            final Asset a = db.get(Asset.class, docId);
+            log.debug("Deserialized asset: {}", a);
         }
-        
-        log.debug("Changed document content: {}", documentString);
-        
-        final Asset a = db.get(Asset.class, docId);
-        log.debug("Deserialized asset: {}",  a);
     }
 
     @PostConstruct

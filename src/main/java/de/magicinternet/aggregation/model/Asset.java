@@ -70,7 +70,8 @@ public class Asset extends CouchDbDocument {
      */
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("ID", this.id)
-                .append("Title", this.title).append("Description", this.description).toString();
+                .append("Revision", this.revision).append("Title", this.title).append("Description", this.description)
+                .toString();
     }
 
     /**
