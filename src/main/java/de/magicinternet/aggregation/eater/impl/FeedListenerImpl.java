@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.magicinternet.aggregation.eater.FeedListener;
+import de.magicinternet.aggregation.model.Asset;
 
 /**
  * This Runnable will establish a long polling connection to the given couchdb
@@ -94,6 +95,9 @@ public class FeedListenerImpl implements FeedListener {
         }
         
         log.debug("Changed document content: {}", documentString);
+        
+        final Asset a = db.get(Asset.class, docId);
+        log.debug("Deserialized asset: {}",  a);
     }
 
     @PostConstruct
