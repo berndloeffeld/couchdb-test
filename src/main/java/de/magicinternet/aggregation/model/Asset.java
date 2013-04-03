@@ -4,12 +4,16 @@ import java.io.IOException;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.ObjectCodec;
 import org.codehaus.jackson.map.DeserializationContext;
 import org.codehaus.jackson.map.JsonDeserializer;
+import org.codehaus.jackson.map.JsonSerializer;
+import org.codehaus.jackson.map.SerializerProvider;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.ektorp.support.CouchDbDocument;
 
 /**
@@ -19,6 +23,7 @@ import org.ektorp.support.CouchDbDocument;
  * 
  */
 @JsonDeserialize(using = Asset.Deserializer.class)
+@JsonSerialize(using = Asset.Serializer.class)
 public class Asset extends CouchDbDocument {
 
     private static final long serialVersionUID = 1;
@@ -97,6 +102,39 @@ public class Asset extends CouchDbDocument {
             }
 
             return result;
+        }
+
+    }
+
+    /**
+     * Serializer of vasdb json.
+     * 
+     * @author bloeffeld
+     * 
+     */
+    public static class Serializer extends JsonSerializer<Asset> {
+
+        @Override
+        public void serialize(final Asset value, final JsonGenerator jgen, final SerializerProvider provider)
+                throws IOException {
+            jgen.writeStartObject();
+            
+            if (value.getTitle() != null) {
+                jgen.writeFieldName("title");
+                jgen.writeStartObject();
+                jgen.writeStringField("default", value.getTitle());
+                jgen.writeEndObject();
+            }
+
+            if (value.getDescription() != null) {
+                jgen.writeFieldName("shortdescription");
+                jgen.writeStartObject();
+                jgen.writeStringField("default", value.getDescription());
+                jgen.writeEndObject();
+            }
+
+            jgen.writeEndObject();
+
         }
 
     }

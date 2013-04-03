@@ -1,7 +1,6 @@
 package de.magicinternet.aggregation;
 
 import org.ektorp.CouchDbConnector;
-import org.ektorp.impl.StdCouchDbInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
@@ -36,7 +35,7 @@ public final class PollingApp {
         final ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring.xml");
         final BeanFactory factory = context;
         final Settings settings = factory.getBean(Settings.class);
-        final StdCouchDbInstance couchDbInstance = factory.getBean(StdCouchDbInstance.class);
+        final CouchDbConnector db = factory.getBean(CouchDbConnector.class);
 
         final FeedListener eater = factory.getBean(FeedListener.class);
 
@@ -44,8 +43,6 @@ public final class PollingApp {
         t.start();
 
         if (settings.isCreateTestDataMode()) {
-            final CouchDbConnector db = couchDbInstance.createConnector("vasdb-test", true);
-            db.createDatabaseIfNotExists();
             createTestEntries(db);
         }
 

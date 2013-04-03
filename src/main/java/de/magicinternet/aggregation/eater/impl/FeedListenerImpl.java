@@ -1,7 +1,5 @@
 package de.magicinternet.aggregation.eater.impl;
 
-import javax.annotation.PostConstruct;
-
 import org.ektorp.CouchDbConnector;
 import org.ektorp.changes.ChangesCommand;
 import org.ektorp.changes.ChangesFeed;
@@ -82,10 +80,4 @@ public class FeedListenerImpl implements FeedListener {
             log.debug("Deserialized asset: {}", a);
         }
     }
-
-    @PostConstruct
-    private void postTest() {
-        db.createDatabaseIfNotExists();
-    }
-
 }
